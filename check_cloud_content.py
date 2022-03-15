@@ -17,7 +17,11 @@ def get_content_achim():
 block_blob_service, blob_container = get_content_achim()
 blobContent = block_blob_service.list_blobs(blob_container)
 blobFiles = []
+
 for content in blobContent:
-    blobFiles.append(content.name)
+    content_name_raw = content.name
+    if "pcmcia" in content_name_raw:
+        content_name = content_name_raw.split('/', 4)[-2]
+        blobFiles.append(content_name)
     
 print(blobFiles)
